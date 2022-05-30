@@ -148,5 +148,15 @@ namespace Completed
             }
             return returnList;
         }
+
+        public List<Vector2> NodesToVector2(List<Node> nodes)
+        {
+            List<Vector2> vectors = new List<Vector2>();
+            foreach (Node node in nodes)
+            {
+                vectors.Add(node.ChangeToVector());
+            }
+            return vectors;
+        }
     }
 }

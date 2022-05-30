@@ -36,5 +36,10 @@ namespace Completed
             this.objectOnTile = ObjectOnTile.none;
             this.unitOnTile = UnitOnTile.none;
         }
+
+        public Vector2 ChangeToVector()
+        {
+            return new Vector2(row, column);
+        }
     }
 }
