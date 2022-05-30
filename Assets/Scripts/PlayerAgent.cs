@@ -2,6 +2,7 @@
 using Unity.MLAgents;
 using Unity.MLAgents.Sensors;
 using Unity.MLAgents.Actuators;
+using System.Collections.Generic;
 
 namespace Completed
 {
@@ -12,6 +13,12 @@ namespace Completed
         private int lastAction = 0;
 
         [SerializeField] private GameManager gameManager;
+
+        // Must match constants set by the boardManager
+        public int maxEnemies = 8; // No real max. Calculated as a log with base 2. Realistic max is 6, using 8 just in case.
+        public int maxFood = 5;
+        public int maxInnerWalls = 9;
+        // Total observations is the sum of the above variables plus 2. Should be 48 by default. (Vectors count as two observations each)
 
         void Start()
         {
@@ -32,24 +39,30 @@ namespace Completed
         public void HandleFinishlevel()
         {
             // TODO: Change the reward below as appropriate.
-            AddReward(0.0f);
+            AddReward(1.0f);
         }
 
         public void HandleFoundFood()
         {
             // TODO: Change the reward below as appropriate.
-            AddReward(0.0f);
+            // float amount = player.pointsPerFood / 100f;
+            float amount = 0.0f;
+            AddReward(amount);
         }
 
         public void HandleFoundSoda()
         {
             // TODO: Change the reward below as appropriate.
-            AddReward(0.0f);
+            // float amount = player.pointsPerSoda / 100f;
+            float amount = 0.0f;
+            AddReward(amount);
         }
         public void HandleLoseFood(int loss)
         {
             // TODO: Change the reward below as appropriate.
-            AddReward(0.0f);
+            // float amount = -loss / 100f;
+            float amount = 0.0f;
+            AddReward(amount);
         }
 
         public void HandleLevelRestart(bool gameOver)
@@ -73,12 +86,58 @@ namespace Completed
 
         public override void CollectObservations(VectorSensor sensor)
         {
-            // TODO: Insert proper code here for collecting the observations!
-            // At the moment this code just feeds in 10 observations, all hardcoded to zero, as a placeholder.
+            // Adds player position (1)
+            Vector2 playerPos = gameManager.gridState.GetPlayerNode().ChangeToVector();
+            sensor.AddObservation(playerPos);
 
-            for (int i = 0; i < 10; i++)
+            // Adds exit position (1)
+            Vector2 exitPos = gameManager.gridState.GetExitNode().ChangeToVector();
+            sensor.AddObservation(exitPos);
+
+            // Adds food and soda positions (Max 5)
+            List<Vector2> foodList = gameManager.gridState.NodesToVector2(gameManager.gridState.GetListOfNodesWithFood());
+            foodList.AddRange(gameManager.gridState.NodesToVector2(gameManager.gridState.GetListOfNodesWithSoda()));
+
+            for (int i = 0; i < maxFood; i++)
             {
-                sensor.AddObservation(0.0f);
+                if (i < foodList.Count)
+                {
+                    sensor.AddObservation(foodList[i]);
+                }
+                else
+                {
+                    sensor.AddObservation(Vector2.zero);
+                }
+            }
+
+            // Adds enemy positions (No max; defined by a log with base 2. Realistic max is 6, using 8 incase the ai trains incredibly well)
+            List<Vector2> enemyList = gameManager.gridState.NodesToVector2(gameManager.gridState.GetListOfNodesWithEnemies());
+
+            for (int i = 0; i < maxEnemies; i++)
+            {
+                if (i < enemyList.Count)
+                {
+                    sensor.AddObservation(enemyList[i]);
+                }
+                else
+                {
+                    sensor.AddObservation(Vector2.zero);
+                }
+            }
+
+            // Adds inner positions (Max 9)
+            List<Vector2> innerWallsList = gameManager.gridState.NodesToVector2(gameManager.gridState.GetListOfNodesWithInnerWalls());
+
+            for (int i = 0; i < maxInnerWalls; i++)
+            {
+                if (i < innerWallsList.Count)
+                {
+                    sensor.AddObservation(innerWallsList[i]);
+                }
+                else
+                {
+                    sensor.AddObservation(Vector2.zero);
+                }
             }
 
             base.CollectObservations(sensor);
