@@ -45,23 +45,20 @@ namespace Completed
         public void HandleFoundFood()
         {
             // TODO: Change the reward below as appropriate.
-            // float amount = player.pointsPerFood / 100f;
-            float amount = 0.0f;
+            float amount = player.pointsPerFood / 100f;
             AddReward(amount);
         }
 
         public void HandleFoundSoda()
         {
             // TODO: Change the reward below as appropriate.
-            // float amount = player.pointsPerSoda / 100f;
-            float amount = 0.0f;
+            float amount = player.pointsPerSoda / 100f;
             AddReward(amount);
         }
         public void HandleLoseFood(int loss)
         {
             // TODO: Change the reward below as appropriate.
-            // float amount = -loss / 100f;
-            float amount = 0.0f;
+            float amount = -loss / 100f;
             AddReward(amount);
         }
 
