@@ -1,0 +1,56 @@
+{
+    "PlayerBehaviour": {
+        "checkpoints": [
+            {
+                "steps": 499999,
+                "file_path": "results\\2022-30-05_16-17-39-82\\PlayerBehaviour\\PlayerBehaviour-499999.onnx",
+                "reward": 0.0,
+                "creation_time": 1653893628.2771735,
+                "auxillary_file_paths": [
+                    "results\\2022-30-05_16-17-39-82\\PlayerBehaviour\\PlayerBehaviour-499999.pt"
+                ]
+            },
+            {
+                "steps": 999997,
+                "file_path": "results\\2022-30-05_16-17-39-82\\PlayerBehaviour\\PlayerBehaviour-999997.onnx",
+                "reward": 0.0,
+                "creation_time": 1653895790.2927701,
+                "auxillary_file_paths": [
+                    "results\\2022-30-05_16-17-39-82\\PlayerBehaviour\\PlayerBehaviour-999997.pt"
+                ]
+            },
+            {
+                "steps": 1499998,
+                "file_path": "results\\2022-30-05_16-17-39-82\\PlayerBehaviour\\PlayerBehaviour-1499998.onnx",
+                "reward": 0.0,
+                "creation_time": 1653897921.783071,
+                "auxillary_file_paths": [
+                    "results\\2022-30-05_16-17-39-82\\PlayerBehaviour\\PlayerBehaviour-1499998.pt"
+                ]
+            },
+            {
+                "steps": 1811529,
+                "file_path": "results\\2022-30-05_16-17-39-82\\PlayerBehaviour\\PlayerBehaviour-1811529.onnx",
+                "reward": null,
+                "creation_time": 1653899342.2307265,
+                "auxillary_file_paths": [
+                    "results\\2022-30-05_16-17-39-82\\PlayerBehaviour\\PlayerBehaviour-1811529.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 1811529,
+            "file_path": "results\\2022-30-05_16-17-39-82\\PlayerBehaviour.onnx",
+            "reward": null,
+            "creation_time": 1653899342.2307265,
+            "auxillary_file_paths": [
+                "results\\2022-30-05_16-17-39-82\\PlayerBehaviour\\PlayerBehaviour-1811529.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.28.0",
+        "torch_version": "1.7.1+cu110"
+    }
+}

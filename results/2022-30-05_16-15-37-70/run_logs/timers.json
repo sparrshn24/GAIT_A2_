@@ -1,0 +1,42 @@
+{
+    "name": "root",
+    "metadata": {
+        "timer_format_version": "0.1.0",
+        "start_time_seconds": "1653891339",
+        "python_version": "3.7.9 (tags/v3.7.9:13c94747c7, Aug 17 2020, 18:58:18) [MSC v.1900 64 bit (AMD64)]",
+        "command_line_arguments": "C:\\Users\\Sean\\AppData\\Local\\Programs\\Python\\Python37\\Scripts\\mlagents-learn config/ppo/roguelike.yaml --run-id=2022-30-05_16-15-37-70",
+        "mlagents_version": "0.28.0",
+        "mlagents_envs_version": "0.28.0",
+        "communication_protocol_version": "1.5.0",
+        "pytorch_version": "1.7.1+cu110",
+        "numpy_version": "1.21.6",
+        "end_time_seconds": "1653891400"
+    },
+    "total": 61.2320967,
+    "count": 1,
+    "self": 0.008164300000004232,
+    "children": {
+        "run_training.setup": {
+            "total": 0.09239929999999985,
+            "count": 1,
+            "self": 0.09239929999999985
+        },
+        "TrainerController.start_learning": {
+            "total": 61.1315331,
+            "count": 1,
+            "self": 0.00014409999999998035,
+            "children": {
+                "TrainerController._reset_env": {
+                    "total": 61.1313703,
+                    "count": 1,
+                    "self": 61.1313703
+                },
+                "TrainerController._save_models": {
+                    "total": 1.8699999998261774e-05,
+                    "count": 1,
+                    "self": 1.8699999998261774e-05
+                }
+            }
+        }
+    }
+}
