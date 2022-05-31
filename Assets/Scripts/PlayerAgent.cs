@@ -126,7 +126,7 @@ namespace Completed
             List<Vector2> enemyList = gameManager.gridState.NodesToVector2(gameManager.gridState.GetListOfNodesWithEnemies());
 
             // Adds closest enemy (1*2)
-            sensor.AddObservation(GetClosestEnemy(enemyList, playerPos));
+            sensor.AddObservation(GetClosestOfType(enemyList, playerPos));
 
             // Adds average distance of enemies (1)
             sensor.AddObservation(GetAverageEnemyDist(enemyList, playerPos));
@@ -162,22 +162,22 @@ namespace Completed
             base.CollectObservations(sensor);
         }
 
-        private Vector2 GetClosestEnemy(List<Vector2> enemies, Vector2 position)
+        private Vector2 GetClosestOfType(List<Vector2> items, Vector2 position)
         {
-            if (enemies.Count < 1)
+            if (items.Count < 1)
             {
                 return Vector2.zero;
             }
-            Vector2 closest = enemies[0];
+            Vector2 closest = items[0];
             float distance = Vector2.Distance(closest, position);
             float tempDist;
-            for (int i = 1; i < enemies.Count; i++)
+            for (int i = 1; i < items.Count; i++)
             {
-                tempDist = Vector2.Distance(enemies[i], position);
+                tempDist = Vector2.Distance(items[i], position);
                 if (tempDist < distance)
                 {
                     distance = tempDist;
-                    closest = enemies[i];
+                    closest = items[i];
                 }
             }
             return closest;
