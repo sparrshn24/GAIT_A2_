@@ -33,7 +33,7 @@ namespace Completed
         public void HandleAttemptMove()
         {
             // TODO: Change the reward below as appropriate. If you want to add a cost per move, you could change the reward to -1.0f (for example).
-            AddReward(0.0f);
+            AddReward(0.00f);
         }
 
         public void HandleFinishlevel()
@@ -83,15 +83,15 @@ namespace Completed
 
         public override void CollectObservations(VectorSensor sensor)
         {
-            // Adds player position (1)
+            // Adds player position (1*2)
             Vector2 playerPos = gameManager.gridState.GetPlayerNode().ChangeToVector();
             sensor.AddObservation(playerPos);
 
-            // Adds exit position (1)
+            // Adds exit position (1*2)
             Vector2 exitPos = gameManager.gridState.GetExitNode().ChangeToVector();
             sensor.AddObservation(exitPos);
 
-            // Adds food and soda positions (Max 5)
+            // Adds food and soda positions (Max 5*2)
             List<Vector2> foodList = gameManager.gridState.NodesToVector2(gameManager.gridState.GetListOfNodesWithFood());
             foodList.AddRange(gameManager.gridState.NodesToVector2(gameManager.gridState.GetListOfNodesWithSoda()));
 
@@ -107,9 +107,15 @@ namespace Completed
                 }
             }
 
-            // Adds enemy positions (No max; defined by a log with base 2. Realistic max is 6, using 8 incase the ai trains incredibly well)
             List<Vector2> enemyList = gameManager.gridState.NodesToVector2(gameManager.gridState.GetListOfNodesWithEnemies());
 
+            // Adds closest enemy (1*2)
+            sensor.AddObservation(GetClosestEnemy(enemyList, playerPos));
+
+            // Adds average distance of enemies (1)
+            sensor.AddObservation(GetAverageEnemyDist(enemyList, playerPos));
+
+            // Adds enemy positions (No max; defined by a log with base 2. Realistic max is 6, using 8 incase the ai trains incredibly well)
             for (int i = 0; i < maxEnemies; i++)
             {
                 if (i < enemyList.Count)
@@ -122,7 +128,7 @@ namespace Completed
                 }
             }
 
-            // Adds inner positions (Max 9)
+            // Adds inner positions (Max 9*2)
             List<Vector2> innerWallsList = gameManager.gridState.NodesToVector2(gameManager.gridState.GetListOfNodesWithInnerWalls());
 
             for (int i = 0; i < maxInnerWalls; i++)
@@ -138,6 +144,42 @@ namespace Completed
             }
 
             base.CollectObservations(sensor);
+        }
+
+        private Vector2 GetClosestEnemy(List<Vector2> enemies, Vector2 position)
+        {
+            if (enemies.Count < 1)
+            {
+                return Vector2.zero;
+            }
+            Vector2 closest = enemies[0];
+            float distance = Vector2.Distance(closest, position);
+            float tempDist;
+            for (int i = 1; i < enemies.Count; i++)
+            {
+                tempDist = Vector2.Distance(enemies[i], position);
+                if (tempDist < distance)
+                {
+                    distance = tempDist;
+                    closest = enemies[i];
+                }
+            }
+            return closest;
+        }
+
+        private float GetAverageEnemyDist(List<Vector2> enemies, Vector2 position)
+        {
+            if (enemies.Count < 1)
+            {
+                return 0.0f;
+            };
+            float distance = 0.0f;
+            for (int i = 1; i < enemies.Count; i++)
+            {
+                distance += Vector2.Distance(enemies[i], position);
+            }
+            distance /= enemies.Count;
+            return distance;
         }
 
         private bool CanMove()
