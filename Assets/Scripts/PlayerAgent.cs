@@ -37,7 +37,7 @@ namespace Completed
         public void HandleAttemptMove()
         {
             // TODO: Change the reward below as appropriate. If you want to add a cost per move, you could change the reward to -1.0f (for example).
-            AddReward(0.00f);
+            AddReward(-0.01f);
         }
 
         public void HandleFinishlevel()
