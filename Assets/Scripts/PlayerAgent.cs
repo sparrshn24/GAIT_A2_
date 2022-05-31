@@ -11,6 +11,7 @@ namespace Completed
     {
         private Player player;
         private int lastAction = 0;
+        private bool foodRewards;
 
         [SerializeField] private GameManager gameManager;
 
@@ -23,6 +24,9 @@ namespace Completed
         void Start()
         {
             player = GetComponent<Player>();
+
+            // Toggle this to enable or disable food related rewards
+            foodRewards = false;
         }
 
         public override void OnEpisodeBegin()
@@ -45,20 +49,32 @@ namespace Completed
         public void HandleFoundFood()
         {
             // TODO: Change the reward below as appropriate.
-            float amount = player.pointsPerFood / 100f;
+            float amount = 0.0f;
+            if (foodRewards)
+            {
+                amount = player.pointsPerFood / 100f;
+            }
             AddReward(amount);
         }
 
         public void HandleFoundSoda()
         {
             // TODO: Change the reward below as appropriate.
-            float amount = player.pointsPerSoda / 100f;
+            float amount = 0.0f;
+            if (foodRewards)
+            {
+                amount = player.pointsPerSoda / 100f;
+            }
             AddReward(amount);
         }
         public void HandleLoseFood(int loss)
         {
             // TODO: Change the reward below as appropriate.
-            float amount = -loss / 100f;
+            float amount = 0.0f;
+            if (foodRewards)
+            {
+                amount = -loss / 100f;
+            }
             AddReward(amount);
         }
 
