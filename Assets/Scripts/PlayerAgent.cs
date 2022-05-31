@@ -26,7 +26,7 @@ namespace Completed
             player = GetComponent<Player>();
 
             // Toggle this to enable or disable food related rewards
-            foodRewards = true;
+            foodRewards = false;
         }
 
         public override void OnEpisodeBegin()
@@ -108,13 +108,13 @@ namespace Completed
             sensor.AddObservation(exitPos);
 
             List<Vector2> foodList = gameManager.gridState.NodesToVector2(gameManager.gridState.GetListOfNodesWithFood());
+            foodList.AddRange(gameManager.gridState.NodesToVector2(gameManager.gridState.GetListOfNodesWithSoda()));
 
             // Adds closest food position
             sensor.AddObservation(GetClosestOfType(foodList, playerPos));
 
             // Adds food and soda positions (Max 5*2)
-            foodList.AddRange(gameManager.gridState.NodesToVector2(gameManager.gridState.GetListOfNodesWithSoda()));
-
+            /*
             for (int i = 0; i < maxFood; i++)
             {
                 if (i < foodList.Count)
@@ -126,6 +126,7 @@ namespace Completed
                     sensor.AddObservation(Vector2.zero);
                 }
             }
+            */
 
             List<Vector2> enemyList = gameManager.gridState.NodesToVector2(gameManager.gridState.GetListOfNodesWithEnemies());
 
@@ -136,6 +137,7 @@ namespace Completed
             sensor.AddObservation(GetAverageEnemyDist(enemyList, playerPos));
 
             // Adds enemy positions (No max; defined by a log with base 2. Realistic max is 6, using 8 incase the ai trains incredibly well)
+            /*
             for (int i = 0; i < maxEnemies; i++)
             {
                 if (i < enemyList.Count)
@@ -147,6 +149,7 @@ namespace Completed
                     sensor.AddObservation(Vector2.zero);
                 }
             }
+            */
 
             // Adds inner positions (Max 9*2)
             List<Vector2> innerWallsList = gameManager.gridState.NodesToVector2(gameManager.gridState.GetListOfNodesWithInnerWalls());
